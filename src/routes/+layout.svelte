@@ -1,20 +1,23 @@
 <script>
     import '../app.css';
     import { Container, Box, Flex } from '$lib';
+    import { user, setUser } from '$lib/store/userStore.js';
+    import { onMount } from 'svelte';
+
+    export let data;
+
+    onMount(() => {
+        if (data.isLoggedIn && data.userData) {
+            setUser({
+                accessToken: 'logged-in', 
+                ...data.userData
+            });
+        }
+    });
 </script>
 
 <Box variant="primary" className="min-h-screen h-full w-full fixed inset-0 overflow-auto">
     <Container>
-        <Box className="py-4">
-            <Flex className="items-center justify-between">
-                <a href="/" class="text-lg font-semibold text-text-primary">Fran's App</a>
-                <nav class="space-x-4">
-                    <a href="/" class="text-text-secondary hover:text-text-primary">Login</a>
-                    <a href="/todo" class="text-text-secondary hover:text-text-primary">Todo</a>
-                </nav>
-            </Flex>
-        </Box>
-
         <slot />
     </Container>
 </Box>
