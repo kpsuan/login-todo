@@ -33,3 +33,6 @@ export const priorityOptions = [
 	{ value: 'medium', label: 'Medium' },
 	{ value: 'high', label: 'High' }
 ];
+
+// UI class presets
+// (login page class presets moved back to the page)
