@@ -40,7 +40,7 @@
         <Box className="flex items-center justify-center">
             <Box className="w-full max-w-md">
                 <Box className="text-center mb-4">
-                <img src="/assets/logo2.png" alt="Logo" class="h-40 mx-auto mb-4" />
+                <img src="/logo2.png" alt="Logo" class="h-40 mx-auto mb-4" />
                 </Box>
 
                 <!-- Test Credentials  -->

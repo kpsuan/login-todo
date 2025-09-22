@@ -65,7 +65,7 @@
 <Section variant="card">
     <Stack>
         <Box className="pb-2 mb-2 text-center">
-            <img src="/assets/6.png" alt="Todo App Icon" class="w-64 h-48 mx-auto mb-2" />
+            <img src="/6.png" alt="Todo App Icon" class="w-64 h-48 mx-auto mb-2" />
             <h1 class="text-2xl font-bold text-text-primary">
                 {$user.isLoggedIn ? `${$user.firstName}'s Todo App` : "Todo App"}
             </h1>
