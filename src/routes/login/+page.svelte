@@ -43,7 +43,7 @@
                 <img src="/assets/logo2.png" alt="Logo" class="h-40 mx-auto mb-4" />
                 </Box>
 
-                <!-- Test Credentials Info -->
+                <!-- Test Credentials  -->
                 <Box className="bg-blue-500/10 border border-blue-500/30 text-blue-300 px-4 py-3 rounded-lg text-sm text-center mb-4">
                     <p class="font-medium mb-1">Test Credentials:</p>
                     <p>Username: <span class="font-mono">emilys</span> | Password: <span class="font-mono">emilyspass</span></p>
