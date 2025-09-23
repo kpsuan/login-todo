@@ -1,30 +1,47 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 
-	export let variant = 'default';
-	export let padding = 'p-4';
-	export let margin = '';
-	export let rounded = 'rounded-lg';
-	export let shadow = '';
-	export let border = '';
-	export let className = '';
+	/**
+	 * @typedef {Object} Props
+	 * @property {string} [variant]
+	 * @property {string} [padding]
+	 * @property {string} [margin]
+	 * @property {string} [rounded]
+	 * @property {string} [shadow]
+	 * @property {string} [border]
+	 * @property {string} [className]
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props & { [key: string]: any }} */
+	let {
+		variant = 'default',
+		padding = 'p-4',
+		margin = '',
+		rounded = 'rounded-lg',
+		shadow = '',
+		border = '',
+		className = '',
+		children,
+		...rest
+	} = $props();
 
 	const dispatch = createEventDispatcher();
 
 	// background variants
-	$: background = {
+	let background = $derived({
 		default: 'bg-transparent',
 		primary: 'bg-primary',
 		secondary: 'bg-secondary',
 		tertiary: 'bg-tertiary',
 		accent: 'bg-accent'
-	}[variant];
+	}[variant]);
 
-	$: classes = [rounded, shadow, margin, padding, border, background, className]
+	let classes = $derived([rounded, shadow, margin, padding, border, background, className]
 		.filter(Boolean)
-		.join(' ');
+		.join(' '));
 </script>
 
-<div {...$$restProps} class={classes} on:click={(e) => dispatch('click', e)}>
-	<slot />
+<div {...rest} class={classes} onclick={(e) => dispatch('click', e)}>
+	{@render children?.()}
 </div>

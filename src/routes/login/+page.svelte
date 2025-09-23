@@ -3,13 +3,13 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 
-	let loading = false;
-	let username = '';
-	let password = '';
-	let clientErrors = {};
+	let loading = $state(false);
+	let username = $state('');
+	let password = $state('');
+	let clientErrors = $state({});
 
 	// Get error from form action result
-	$: error = $page.form?.error || '';
+	let error = $derived($page.form?.error || '');
 
 	// Client-side validation
 	function validateForm() {
@@ -89,7 +89,7 @@
 							placeholder="Username"
 							autocomplete="username"
 							bind:value={username}
-							on:input={() => {
+							oninput={() => {
 								if (clientErrors.username) validateForm();
 							}}
 							class="w-full rounded-lg border px-3 py-2 text-sm sm:px-4 sm:py-3 sm:text-base {clientErrors.username
@@ -115,7 +115,7 @@
 							placeholder="Password"
 							autocomplete="current-password"
 							bind:value={password}
-							on:input={() => {
+							oninput={() => {
 								if (clientErrors.password) validateForm();
 							}}
 							class="w-full rounded-lg border px-3 py-2 text-sm sm:px-4 sm:py-3 sm:text-base {clientErrors.password

@@ -1,21 +1,25 @@
 <script>
+	import { run } from 'svelte/legacy';
+
 	import { stats, List, Section, Box, Stack, Flex } from '$lib';
 	import { user, logout, setUser } from '$lib/store/userStore.svelte.js';
 	import { enhance } from '$app/forms';
 
-	export let data;
+	let { data } = $props();
 
 	// Sync user data from server with client store
-	$: if (data.userData && data.token && !user().isLoggedIn) {
-		setUser({
-			accessToken: data.token,
-			username: data.userData.username,
-			firstName: data.userData.firstName,
-			lastName: data.userData.lastName,
-			email: data.userData.email,
-			image: data.userData.image
-		});
-	}
+	run(() => {
+		if (data.userData && data.token && !user().isLoggedIn) {
+			setUser({
+				accessToken: data.token,
+				username: data.userData.username,
+				firstName: data.userData.firstName,
+				lastName: data.userData.lastName,
+				email: data.userData.email,
+				image: data.userData.image
+			});
+		}
+	});
 
 	// Logout function
 	function handleLogout() {

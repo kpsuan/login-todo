@@ -1,15 +1,29 @@
 <script>
+	import { preventDefault } from 'svelte/legacy';
+
 	import { Stack, Flex, Grid, Box, priorityOptions } from '$lib';
 
-	export let todo = { title: '', description: '', dueDate: '', priority: 'medium' };
-	export let onSubmit = () => {};
-	export let onCancel = () => {};
-	export let variant = 'primary'; // Box variant
-	export let showCancel = true; // show cancel button
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} [todo]
+	 * @property {any} [onSubmit]
+	 * @property {any} [onCancel]
+	 * @property {string} [variant] - Box variant
+	 * @property {boolean} [showCancel] - show cancel button
+	 */
+
+	/** @type {Props} */
+	let {
+		todo = $bindable({ title: '', description: '', dueDate: '', priority: 'medium' }),
+		onSubmit = () => {},
+		onCancel = () => {},
+		variant = 'primary',
+		showCancel = true
+	} = $props();
 </script>
 
 <Box {variant} border="border border-tertiary">
-	<form on:submit|preventDefault={() => onSubmit({ ...todo })}>
+	<form onsubmit={preventDefault(() => onSubmit({ ...todo }))}>
 		<Stack spacing="space-y-3">
 			<input
 				type="text"
@@ -54,7 +68,7 @@
 				{#if showCancel}
 					<button
 						type="button"
-						on:click={onCancel}
+						onclick={onCancel}
 						class="flex-1 rounded border border-tertiary bg-secondary px-3 py-2 text-sm text-text-primary transition-colors hover:bg-tertiary sm:px-4 sm:py-2 sm:text-base"
 					>
 						Cancel

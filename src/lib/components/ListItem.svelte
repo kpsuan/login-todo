@@ -11,13 +11,13 @@
 	} from '$lib';
 	import TodoForm from './TodoForm.svelte';
 
-	export let item;
+	let { item } = $props();
 
-	let isEditing = false;
-	let editData = { ...item };
+	let isEditing = $state(false);
+	let editData = $state({ ...item });
 
 	// Validation
-	$: isValid = item && item.id && item.title;
+	let isValid = $derived(item && item.id && item.title);
 
 	// Actions
 	const startEdit = () => (isEditing = true);
@@ -60,7 +60,7 @@
 		<Flex align="items-start" gap="gap-3" className="p-2 sm:p-3">
 			<!-- Checkbox -->
 			<button
-				on:click={handleToggle}
+				onclick={handleToggle}
 				class="flex-shrink-0 pt-1"
 				aria-label={item.completed ? 'Mark as incomplete' : 'Mark as complete'}
 			>
@@ -125,14 +125,14 @@
 						className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
 					>
 						<button
-							on:click={startEdit}
+							onclick={startEdit}
 							class="rounded bg-tertiary px-2 py-1 text-xs text-accent transition-colors active:bg-accent active:text-primary sm:hover:bg-accent sm:hover:text-primary"
 							title="Edit todo"
 						>
 							Edit
 						</button>
 						<button
-							on:click={handleDelete}
+							onclick={handleDelete}
 							class="rounded bg-red-900 px-2 py-1 text-xs text-red-400 transition-colors active:bg-red-800 sm:hover:bg-red-800"
 							title="Delete todo"
 						>
