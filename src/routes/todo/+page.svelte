@@ -1,20 +1,21 @@
 <script>
 	import { stats, List, Section, Box, Stack, Flex } from '$lib';
-	import { user, logout, setUser } from '$lib/store/userStore.js';
+	import { user, logout, setUser } from '$lib/store/userStore.svelte.js';
 	import { enhance } from '$app/forms';
-	import { onMount } from 'svelte';
 
 	export let data;
 
 	// Sync user data from server with client store
-	onMount(() => {
-		if (data.userData && data.token) {
-			setUser({
-				accessToken: data.token,
-				...data.userData
-			});
-		}
-	});
+	$: if (data.userData && data.token && !user().isLoggedIn) {
+		setUser({
+			accessToken: data.token,
+			username: data.userData.username,
+			firstName: data.userData.firstName,
+			lastName: data.userData.lastName,
+			email: data.userData.email,
+			image: data.userData.image
+		});
+	}
 
 	// Logout function
 	function handleLogout() {
@@ -29,21 +30,21 @@
 		<Flex className="items-center gap-2">
 			<!-- User avatar -->
 			<img
-				src={$user.image || 'https://via.placeholder.com/40'}
+				src={user().image || 'https://via.placeholder.com/40'}
 				alt="User Avatar"
 				class="h-6 w-6 rounded-full border border-[var(--color-border)] sm:h-8 sm:w-8"
 			/>
 			<div class="flex flex-col">
 				<span class="text-xs text-text-primary sm:text-sm">
-					{$user.isLoggedIn ? `${$user.firstName} ${$user.lastName}` : 'Guest'}
+					{user().isLoggedIn ? `${user().firstName} ${user().lastName}` : 'Guest'}
 				</span>
-				{#if $user.isLoggedIn && $user.email}
+				{#if user().isLoggedIn && user().email}
 					<span class="hidden text-xs text-text-secondary sm:block">
-						{$user.email}
+						{user().email}
 					</span>
 				{/if}
 			</div>
-			{#if $user.isLoggedIn}
+			{#if user().isLoggedIn}
 				<form
 					method="POST"
 					action="?/logout"
@@ -71,7 +72,7 @@
 		<Box className="pb-2 mb-2 text-center px-2 sm:px-0">
 			<img src="/6.png" alt="Todo App Icon" class="mx-auto mb-2 h-32 w-48 sm:h-48 sm:w-64" />
 			<h1 class="text-xl font-bold text-text-primary sm:text-2xl">
-				{$user.isLoggedIn ? `${$user.firstName}'s Todo App` : 'Todo App'}
+				{user().isLoggedIn ? `${user().firstName}'s Todo App` : 'Todo App'}
 			</h1>
 			<p class="mt-1 text-xs text-text-secondary sm:text-sm">
 				{#if stats().total > 0}
