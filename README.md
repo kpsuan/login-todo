@@ -2,6 +2,8 @@
 
 ## Features
 
+- Login with DummyJson Accounts
+- See user info and can log out
 - Add todos with title, description, due date, and priority
 - Edit todos inline
 - Automatic priority-based sorting (High → Medium → Low)
@@ -27,6 +29,7 @@ Open the app in your browser at `http://localhost:5173`
 4. **Edit Todos**: Click the Edit button on any todo to modify it
 5. **Complete Todos**: Click the checkbox to mark todos as done
 6. **Data Persistence**: Your todos are automatically saved to localStorage
+7. **Login / Logout Functionality** : Log in using DummyJson accounts and see account information in the navbar. 
 
 ## Building
 

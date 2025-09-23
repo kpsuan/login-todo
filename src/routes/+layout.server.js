@@ -1,19 +1,8 @@
-// src/routes/+layout.server.js
-export function load({ cookies, url }) {
-	const token = cookies.get('accessToken');
-	const userDataCookie = cookies.get('userData');
-	let userData = null;
-
-	if (userDataCookie) {
-		try {
-			userData = JSON.parse(userDataCookie);
-		} catch (e) {
-			console.error('Error parsing user data:', e);
-		}
-	}
-
+export function load({ locals, url }) {
+	const isLoggedIn = !!locals.user;
+	const userData = locals.user?.data ?? null;
 	return {
-		isLoggedIn: !!token,
+		isLoggedIn,
 		userData,
 		currentPath: url.pathname
 	};
