@@ -37,26 +37,27 @@
 
 <Section variant="card">
 	<Stack>
-		<Box className="flex items-center justify-center">
-			<Box className="w-full max-w-md">
+		<Box className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+			<Box className="w-full max-w-xs sm:max-w-md lg:max-w-lg">
 				<Box className="text-center mb-4">
-					<img src="/logo2.png" alt="Logo" class="mx-auto mb-4 h-40" />
+					<img src="/logo2.png" alt="Logo" class="mx-auto mb-4 h-32 sm:h-40" />
 				</Box>
 
 				<!-- Test Credentials  -->
 				<Box
-					className="bg-blue-500/10 border border-blue-500/30 text-blue-300 px-4 py-3 rounded-lg text-sm text-center mb-4"
+					className="bg-blue-500/10 border border-blue-500/30 text-blue-300 px-3 py-2 sm:px-4 sm:py-3 rounded-lg text-xs sm:text-sm text-center mb-4"
 				>
 					<p class="mb-1 font-medium">Test Credentials:</p>
-					<p>
-						Username: <span class="font-mono">emilys</span> | Password:
-						<span class="font-mono">emilyspass</span>
+					<p class="flex flex-col gap-1 sm:flex-row sm:justify-center sm:gap-2">
+						<span>Username: <span class="font-mono">emilys</span></span>
+						<span class="hidden sm:inline">|</span>
+						<span>Password: <span class="font-mono">emilyspass</span></span>
 					</p>
 				</Box>
 
 				{#if error}
 					<Box
-						className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg text-sm text-center"
+						className="bg-red-500/10 border border-red-500/30 text-red-300 px-3 py-2 sm:px-4 sm:py-3 rounded-lg text-xs sm:text-sm text-center"
 						>{error}</Box
 					>
 				{/if}
@@ -74,11 +75,12 @@
 							loading = false;
 						};
 					}}
-					class="space-y-4"
+					class="space-y-3 sm:space-y-4"
 				>
 					<div>
-						<label for="username" class="mb-2 block text-sm font-medium text-text-primary"
-							>Username</label
+						<label
+							for="username"
+							class="mb-2 block text-xs font-medium text-text-primary sm:text-sm">Username</label
 						>
 						<input
 							id="username"
@@ -90,7 +92,7 @@
 							on:input={() => {
 								if (clientErrors.username) validateForm();
 							}}
-							class="w-full rounded-lg border px-4 py-3 {clientErrors.username
+							class="w-full rounded-lg border px-3 py-2 text-sm sm:px-4 sm:py-3 sm:text-base {clientErrors.username
 								? 'border-red-500'
 								: ''}"
 							required
@@ -102,8 +104,9 @@
 					</div>
 
 					<div>
-						<label for="password" class="mb-2 block text-sm font-medium text-text-primary"
-							>Password</label
+						<label
+							for="password"
+							class="mb-2 block text-xs font-medium text-text-primary sm:text-sm">Password</label
 						>
 						<input
 							id="password"
@@ -115,7 +118,7 @@
 							on:input={() => {
 								if (clientErrors.password) validateForm();
 							}}
-							class="w-full rounded-lg border px-4 py-3 {clientErrors.password
+							class="w-full rounded-lg border px-3 py-2 text-sm sm:px-4 sm:py-3 sm:text-base {clientErrors.password
 								? 'border-red-500'
 								: ''}"
 							required
@@ -128,7 +131,7 @@
 
 					<button
 						type="submit"
-						class="w-full rounded-lg bg-[var(--color-tertiary)] py-3 text-white disabled:cursor-not-allowed disabled:opacity-50"
+						class="w-full rounded-lg bg-[var(--color-tertiary)] py-2.5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50 sm:py-3 sm:text-base"
 						disabled={loading ||
 							Object.keys(clientErrors).length > 0 ||
 							!username.trim() ||

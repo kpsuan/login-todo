@@ -54,8 +54,10 @@
 	<TodoForm todo={editData} onSubmit={saveEdit} onCancel={cancelEdit} variant="tertiary" />
 {:else}
 	<!-- View Mode -->
-	<div class="group rounded-lg bg-todo-item transition-all duration-200 hover:brightness-110">
-		<Flex align="items-start" gap="gap-3" className="p-3">
+	<div
+		class="group rounded-lg bg-todo-item transition-all duration-200 active:brightness-110 sm:hover:brightness-110"
+	>
+		<Flex align="items-start" gap="gap-3" className="p-2 sm:p-3">
 			<!-- Checkbox -->
 			<button
 				on:click={handleToggle}
@@ -66,7 +68,7 @@
 					class={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-all duration-200 ${
 						item.completed
 							? 'border-accent bg-accent'
-							: 'border-border bg-secondary hover:border-accent'
+							: 'border-border bg-secondary active:border-accent sm:hover:border-accent'
 					}`}
 				>
 					{#if item.completed}
@@ -87,20 +89,20 @@
 				<Flex align="items-start" justify="justify-between">
 					<Grow>
 						<h3
-							class={`font-medium ${item.completed ? 'text-text-secondary line-through' : 'text-text-primary'}`}
+							class={`text-sm font-medium sm:text-base ${item.completed ? 'text-text-secondary line-through' : 'text-text-primary'}`}
 						>
 							{item.title}
 						</h3>
 
 						{#if item.description}
 							<p
-								class={`mt-1 text-sm ${item.completed ? 'text-text-secondary line-through opacity-70' : 'text-text-secondary'}`}
+								class={`mt-1 text-xs sm:text-sm ${item.completed ? 'text-text-secondary line-through opacity-70' : 'text-text-secondary'}`}
 							>
 								{item.description}
 							</p>
 						{/if}
 
-						<Flex align="items-center" gap="gap-3" className="mt-2 text-xs">
+						<Flex align="items-center" gap="gap-2 sm:gap-3" className="mt-1 sm:mt-2 text-xs">
 							<span class={`font-medium ${getPriorityColor(item.priority)}`}>
 								{item.priority.toUpperCase()}
 							</span>
@@ -118,16 +120,21 @@
 					</Grow>
 
 					<!-- Actions -->
-					<Flex gap="gap-1" className="opacity-0 group-hover:opacity-100 transition-opacity">
+					<Flex
+						gap="gap-1"
+						className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+					>
 						<button
 							on:click={startEdit}
-							class="rounded bg-tertiary px-2 py-1 text-xs text-accent transition-colors hover:bg-accent hover:text-primary"
+							class="rounded bg-tertiary px-2 py-1 text-xs text-accent transition-colors active:bg-accent active:text-primary sm:hover:bg-accent sm:hover:text-primary"
+							title="Edit todo"
 						>
 							Edit
 						</button>
 						<button
 							on:click={handleDelete}
-							class="rounded bg-red-900 px-2 py-1 text-xs text-red-400 transition-colors hover:bg-red-800"
+							class="rounded bg-red-900 px-2 py-1 text-xs text-red-400 transition-colors active:bg-red-800 sm:hover:bg-red-800"
+							title="Delete todo"
 						>
 							Delete
 						</button>

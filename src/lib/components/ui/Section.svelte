@@ -1,6 +1,6 @@
 <script>
 	export let variant = 'default';
-	export let padding = 'p-4';
+	export let padding = 'p-3 sm:p-4';
 	export let background =
 		variant === 'header' ? 'bg-secondary' : variant === 'card' ? 'bg-secondary' : 'bg-transparent';
 

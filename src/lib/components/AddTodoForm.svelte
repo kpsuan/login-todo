@@ -19,7 +19,7 @@
 {#if !showForm}
 	<button
 		on:click={() => (showForm = true)}
-		class="w-full rounded-lg border-2 border-dashed border-tertiary p-3 text-text-secondary transition-colors hover:border-accent hover:text-accent"
+		class="w-full rounded-lg border-2 border-dashed border-tertiary p-2 text-sm text-text-secondary transition-colors active:border-accent active:text-accent sm:p-3 sm:text-base sm:hover:border-accent sm:hover:text-accent"
 	>
 		+ Add New Task
 	</button>

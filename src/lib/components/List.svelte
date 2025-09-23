@@ -30,16 +30,20 @@
 	<!-- Todo Statistics -->
 	{#if stats().total > 0}
 		<Box padding="p-2" className="rounded-lg">
-			<Grid cols={3} gap="gap-4" className="text-sm text-center">
+			<Grid cols={3} gap="gap-2 sm:gap-4" className="text-xs sm:text-sm text-center">
 				{#each filters as { key, label, color, value } (key)}
 					<Box
 						on:click={() => setFilter(key)}
-						className="cursor-pointer rounded-lg transition-colors hover:opacity-80"
+						className="cursor-pointer rounded-lg transition-colors active:opacity-80 sm:hover:opacity-80 p-2 sm:p-3"
 					>
-						<div class={`text-lg font-bold ${filter() === key ? color : 'text-text-secondary'}`}>
+						<div
+							class={`text-sm font-bold sm:text-lg ${filter() === key ? color : 'text-text-secondary'}`}
+						>
 							{value()}
 						</div>
-						<div class={`${filter() === key ? `${color} font-semibold` : 'text-text-secondary'}`}>
+						<div
+							class={`text-xs sm:text-sm ${filter() === key ? `${color} font-semibold` : 'text-text-secondary'}`}
+						>
 							{label}
 						</div>
 					</Box>
