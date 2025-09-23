@@ -10,31 +10,34 @@
 		Box,
 		Grid
 	} from '$lib';
+	import { CheckCircle, Circle, Target } from 'lucide-svelte';
 
 	const filters = [
-		{ key: 'all', label: 'Total', color: 'text-accent', value: () => stats().total },
+		{ key: 'all', label: 'Total', color: 'text-accent', value: () => stats().total, icon: Target },
 		{
 			key: 'completed',
 			label: 'Completed',
 			color: 'text-green-400',
-			value: () => stats().completed
+			value: () => stats().completed,
+			icon: CheckCircle
 		},
-		{ key: 'active', label: 'Pending', color: 'text-orange-400', value: () => stats().pending }
+		{ key: 'active', label: 'Pending', color: 'text-orange-400', value: () => stats().pending, icon: Circle }
 	];
 </script>
 
 {#snippet todoStats()}
 	<Box padding="p-2" className="rounded-lg">
 		<Grid cols={3} gap="gap-2 sm:gap-4" className="text-xs sm:text-sm text-center">
-			{#each filters as { key, label, color, value } (key)}
+			{#each filters as { key, label, color, value, icon } (key)}
 				<Box
 					onclick={() => setFilter(key)}
 					className="cursor-pointer rounded-lg transition-colors active:opacity-80 sm:hover:opacity-80 p-2 sm:p-3"
 				>
 					<div
-						class={`text-sm font-bold sm:text-lg ${filter() === key ? color : 'text-text-secondary'}`}
+						class={`text-sm font-bold sm:text-lg ${filter() === key ? color : 'text-text-secondary'} flex items-center justify-center gap-1`}
 					>
-						{value()}
+						<svelte:component this={icon} class="h-3 w-3 sm:h-4 sm:w-4" />
+						<span>{value()}</span>
 					</div>
 					<div
 						class={`text-xs sm:text-sm ${filter() === key ? `${color} font-semibold` : 'text-text-secondary'}`}

@@ -1,5 +1,6 @@
 <script>
 	import { preventDefault } from 'svelte/legacy';
+	import { Save, Plus, X } from 'lucide-svelte';
 
 	import { Stack, Flex, Grid, Box, priorityOptions } from '$lib';
 
@@ -64,18 +65,25 @@
 	<Flex gap="gap-2" className="flex-col sm:flex-row">
 		<button
 			type="submit"
-			class="flex-1 rounded bg-accent px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-text-secondary sm:px-4 sm:py-2 sm:text-base"
+			class="flex-1 rounded bg-accent px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-text-secondary sm:px-4 sm:py-2 sm:text-base flex items-center justify-center gap-2"
 		>
-			{todo.id ? 'Save Changes' : 'Add Todo'}
+			{#if todo.id}
+				<Save class="h-4 w-4" />
+				<span>Save Changes</span>
+			{:else}
+				<Plus class="h-4 w-4" />
+				<span>Add Todo</span>
+			{/if}
 		</button>
 
 		{#if showCancel}
 			<button
 				type="button"
 				onclick={onCancel}
-				class="flex-1 rounded border border-tertiary bg-secondary px-3 py-2 text-sm text-text-primary transition-colors hover:bg-tertiary sm:px-4 sm:py-2 sm:text-base"
+				class="flex-1 rounded border border-tertiary bg-secondary px-3 py-2 text-sm text-text-primary transition-colors hover:bg-tertiary sm:px-4 sm:py-2 sm:text-base flex items-center justify-center gap-2"
 			>
-				Cancel
+				<X class="h-4 w-4" />
+				<span>Cancel</span>
 			</button>
 		{/if}
 	</Flex>

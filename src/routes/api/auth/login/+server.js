@@ -10,14 +10,6 @@ export async function POST({ request, cookies, fetch }) {
 		return json({ error: 'Username and password are required' }, { status: 400 });
 	}
 
-	if (body.username.length < 3) {
-		return json({ error: 'Username must be at least 3 characters long' }, { status: 400 });
-	}
-
-	if (body.password.length < 6) {
-		return json({ error: 'Password must be at least 6 characters long' }, { status: 400 });
-	}
-
 	try {
 		const res = await fetch(EXTERNAL_API_URL, {
 			method: 'POST',

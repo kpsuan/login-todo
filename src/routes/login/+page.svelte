@@ -2,6 +2,7 @@
 	import { Section, Box, Stack } from '$lib';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { LogIn } from 'lucide-svelte';
 
 	let loading = $state(false);
 	let username = $state('');
@@ -17,14 +18,10 @@
 
 		if (!username.trim()) {
 			clientErrors.username = 'Username is required';
-		} else if (username.trim().length < 3) {
-			clientErrors.username = 'Username must be at least 3 characters long';
 		}
 
 		if (!password) {
 			clientErrors.password = 'Password is required';
-		} else if (password.length < 6) {
-			clientErrors.password = 'Password must be at least 6 characters long';
 		}
 
 		return Object.keys(clientErrors).length === 0;
@@ -82,7 +79,6 @@
 				? 'border-red-500'
 				: ''}"
 			required
-			minlength="3"
 		/>
 		{#if clientErrors.username}
 			<p class="mt-1 text-sm text-red-500">{clientErrors.username}</p>
@@ -110,7 +106,6 @@
 				? 'border-red-500'
 				: ''}"
 			required
-			minlength="6"
 		/>
 		{#if clientErrors.password}
 			<p class="mt-1 text-sm text-red-500">{clientErrors.password}</p>
@@ -121,20 +116,25 @@
 {#snippet submitButton()}
 	<button
 		type="submit"
-		class="w-full rounded-lg bg-[var(--color-tertiary)] py-2.5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50 sm:py-3 sm:text-base"
+		class="w-full rounded-lg bg-[var(--color-tertiary)] py-2.5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50 sm:py-3 sm:text-base flex items-center justify-center gap-2"
 		disabled={loading ||
 			Object.keys(clientErrors).length > 0 ||
 			!username.trim() ||
 			!password}
 	>
-		{#if loading}Logging in...{:else}Log In{/if}
+		{#if loading}
+			<div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+			<span>Logging in...</span>
+		{:else}
+			<LogIn class="h-4 w-4" />
+			<span>Log In</span>
+		{/if}
 	</button>
 {/snippet}
 
 {#snippet validationHints()}
 	<div class="space-y-1 text-xs text-text-secondary">
-		<p>• Username must be at least 3 characters</p>
-		<p>• Password must be at least 6 characters</p>
+		<p>• Use test credentials above for demo</p>
 	</div>
 {/snippet}
 

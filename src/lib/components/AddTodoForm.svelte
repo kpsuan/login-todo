@@ -1,5 +1,6 @@
 <script>
 	import { addTodo } from '$lib';
+	import { Plus } from 'lucide-svelte';
 	import TodoForm from './TodoForm.svelte';
 
 	let showForm = $state(false);
@@ -19,9 +20,10 @@
 {#if !showForm}
 	<button
 		onclick={() => (showForm = true)}
-		class="w-full rounded-lg border-2 border-dashed border-tertiary p-2 text-sm text-text-secondary transition-colors active:border-accent active:text-accent sm:p-3 sm:text-base sm:hover:border-accent sm:hover:text-accent"
+		class="w-full rounded-lg border-2 border-dashed border-tertiary p-2 text-sm text-text-secondary transition-colors active:border-accent active:text-accent sm:p-3 sm:text-base sm:hover:border-accent sm:hover:text-accent flex items-center justify-center gap-2"
 	>
-		+ Add New Task
+		<Plus class="h-4 w-4" />
+		<span>Add New Task</span>
 	</button>
 {:else}
 	<TodoForm todo={newTodo} onSubmit={handleAdd} onCancel={resetForm} variant="primary" />

@@ -9,6 +9,7 @@
 		Flex,
 		Grow
 	} from '$lib';
+	import { Edit3, Trash2 } from 'lucide-svelte';
 	import TodoForm from './TodoForm.svelte';
 
 	let { item } = $props();
@@ -129,17 +130,19 @@
 					>
 						<button
 							onclick={startEdit}
-							class="rounded bg-tertiary px-2 py-1 text-xs text-accent transition-colors active:bg-accent active:text-primary sm:hover:bg-accent sm:hover:text-primary"
+							class="rounded bg-tertiary px-2 py-1 text-xs text-accent transition-colors active:bg-accent active:text-primary sm:hover:bg-accent sm:hover:text-primary flex items-center gap-1"
 							title="Edit todo"
 						>
-							Edit
+							<Edit3 class="h-3 w-3" />
+							<span class="hidden sm:inline">Edit</span>
 						</button>
 						<button
 							onclick={handleDelete}
-							class="rounded bg-red-900 px-2 py-1 text-xs text-red-400 transition-colors active:bg-red-800 sm:hover:bg-red-800"
+							class="rounded bg-red-900 px-2 py-1 text-xs text-red-400 transition-colors active:bg-red-800 sm:hover:bg-red-800 flex items-center gap-1"
 							title="Delete todo"
 						>
-							Delete
+							<Trash2 class="h-3 w-3" />
+							<span class="hidden sm:inline">Delete</span>
 						</button>
 					</Flex>
 				</Flex>

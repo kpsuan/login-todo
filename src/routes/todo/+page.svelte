@@ -1,5 +1,6 @@
 <script>
 	import { run } from 'svelte/legacy';
+	import { LogOut, User } from 'lucide-svelte';
 
 	import { stats, List, Section, Box, Stack, Flex } from '$lib';
 	import { user, logout, setUser } from '$lib/store/userStore.svelte.js';
@@ -32,12 +33,18 @@
 	<Box className="mb-4 px-2 sm:px-0">
 		<Flex className="items-center justify-between">
 			<Flex className="items-center gap-2">
-				<!-- User avatar -->
-				<img
-					src={user().image || 'https://via.placeholder.com/40'}
-					alt="User Avatar"
-					class="h-6 w-6 rounded-full border border-[var(--color-border)] sm:h-8 sm:w-8"
-				/>
+				<!-- User avatar with icon fallback -->
+				{#if user().image}
+					<img
+						src={user().image}
+						alt="User Avatar"
+						class="h-6 w-6 rounded-full border border-[var(--color-border)] sm:h-8 sm:w-8"
+					/>
+				{:else}
+					<div class="h-6 w-6 rounded-full border border-[var(--color-border)] bg-tertiary flex items-center justify-center sm:h-8 sm:w-8">
+						<User class="h-3 w-3 text-text-secondary sm:h-4 sm:w-4" />
+					</div>
+				{/if}
 				<div class="flex flex-col">
 					<span class="text-xs text-text-primary sm:text-sm">
 						{user().isLoggedIn ? `${user().firstName} ${user().lastName}` : 'Guest'}
@@ -61,9 +68,10 @@
 					>
 						<button
 							type="submit"
-							class="rounded-md bg-[var(--color-tertiary)] px-2 py-1 text-xs text-white hover:opacity-90 focus:ring-2 focus:ring-[var(--color-accent)]/30 focus:outline-none sm:px-3 sm:py-1.5 sm:text-sm"
+							class="rounded-md bg-[var(--color-tertiary)] px-2 py-1 text-xs text-white hover:opacity-90 focus:ring-2 focus:ring-[var(--color-accent)]/30 focus:outline-none sm:px-3 sm:py-1.5 sm:text-sm flex items-center gap-1"
 						>
-							Logout
+							<LogOut class="h-3 w-3 sm:h-4 sm:w-4" />
+							<span class="hidden sm:inline">Logout</span>
 						</button>
 					</form>
 				{/if}

@@ -1,33 +1,65 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { dev } from '$app/environment';
+
+const EXTERNAL_API_URL = 'https://dummyjson.com/auth/login';
 
 export const actions = {
-	login: async ({ request, fetch }) => {
+	login: async ({ request, cookies, fetch }) => {
 		const formData = await request.formData();
 		const username = formData.get('username');
 		const password = formData.get('password');
 
+		if (!username || !password) {
+			return fail(400, { error: 'Username and password are required' });
+		}
+
 		try {
-			// Call internal API endpoint - handle all validation
-			const res = await fetch('/api/auth/login', {
+			const res = await fetch(EXTERNAL_API_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ username, password })
+				body: JSON.stringify({
+					username,
+					password,
+					expiresInMins: 60
+				})
 			});
+
+			if (!res.ok) {
+				const errorData = await res.json().catch(() => ({}));
+				return fail(400, { error: errorData.message || 'Incorrect username or password' });
+			}
 
 			const data = await res.json();
 
-			if (!res.ok) {
-				return fail(res.status, { error: data.error || 'Login failed' });
-			}
+			// Store both token and user data in cookies
+			const cookieOptions = {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'strict',
+				secure: !dev,
+				maxAge: 60 * 60 // 1 hour
+			};
+
+			cookies.set('accessToken', data.token || data.accessToken, cookieOptions);
+
+			cookies.set(
+				'userData',
+				JSON.stringify({
+					id: data.id,
+					username: data.username,
+					firstName: data.firstName,
+					lastName: data.lastName,
+					email: data.email,
+					image: data.image
+				}),
+				cookieOptions
+			);
 		} catch (err) {
-			if (err?.status >= 300 && err?.status < 400) {
-				throw err;
-			}
-			console.error('Login action error:', err);
+			console.error('Login error:', err);
 			return fail(500, { error: 'Login failed. Please try again.' });
 		}
 
-		// Redirect after successful login (outside try/catch)
+		// Redirect after successful login
 		throw redirect(303, '/todo');
 	}
 };
