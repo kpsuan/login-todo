@@ -46,14 +46,17 @@
 	// Common classes (removed unused variable)
 </script>
 
-{#if !isValid}
+{#snippet invalidTodo()}
 	<div class="rounded-lg border border-red-500 bg-tertiary p-3">
 		<p class="text-sm text-red-400">Invalid todo item</p>
 	</div>
-{:else if isEditing}
+{/snippet}
+
+{#snippet editMode()}
 	<TodoForm todo={editData} onSubmit={saveEdit} onCancel={cancelEdit} variant="tertiary" />
-{:else}
-	<!-- View Mode -->
+{/snippet}
+
+{#snippet todoDisplay()}
 	<div
 		class="group rounded-lg bg-todo-item transition-all duration-200 active:brightness-110 sm:hover:brightness-110"
 	>
@@ -143,4 +146,12 @@
 			</Grow>
 		</Flex>
 	</div>
+{/snippet}
+
+{#if !isValid}
+	{@render invalidTodo()}
+{:else if isEditing}
+	{@render editMode()}
+{:else}
+	{@render todoDisplay()}
 {/if}
