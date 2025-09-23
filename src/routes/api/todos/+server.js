@@ -1,6 +1,5 @@
 /**
  * Todo Collection API Endpoint
- *
  * Handles operations on the entire collection of todos:
  * - GET /api/todos - List all todos with optional filtering
  * - POST /api/todos - Create a new todo
@@ -42,13 +41,8 @@ export async function GET({ locals, url }) {
 	});
 }
 
-/**
- * Creates a new todo from JSON body.
- * Required: { title: "string" }
- * Optional: { description, dueDate, priority }
- *
- * Returns the created todo with generated ID and timestamps
- */
+//Creates a new todo from JSON body.
+
 export async function POST({ locals, request }) {
 	if (!locals.user) {
 		return new Response('Unauthorized', { status: 401 });
