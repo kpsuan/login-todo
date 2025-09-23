@@ -14,7 +14,7 @@ export { default as Grid } from './components/ui/Grid.svelte';
 
 // Store exports
 export {
-	app,
+	todoState,
 	stats,
 	sortedItems,
 	filteredItems,
@@ -22,7 +22,8 @@ export {
 	addTodo,
 	updateTodo,
 	deleteTodo,
-	toggleComplete
+	toggleComplete,
+	setFilter
 } from './store/todoStore.svelte.js';
 
 // Utility functions

@@ -74,8 +74,8 @@
 				{$user.isLoggedIn ? `${$user.firstName}'s Todo App` : 'Todo App'}
 			</h1>
 			<p class="mt-1 text-sm text-text-secondary">
-				{#if $stats.total > 0}
-					{$stats.pending} pending of {$stats.total} todos
+				{#if stats().total > 0}
+					{stats().pending} pending of {stats().total} todos
 				{:else}
 					Get organized with your todo list!
 				{/if}

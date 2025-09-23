@@ -1,19 +1,25 @@
 <script>
-	import { filteredItems, stats, filter, ListItem, AddTodoForm, Stack, Box, Grid } from '$lib';
-
-	function setFilter(value) {
-		filter.set(value);
-	}
+	import {
+		filteredItems,
+		stats,
+		filter,
+		setFilter,
+		ListItem,
+		AddTodoForm,
+		Stack,
+		Box,
+		Grid
+	} from '$lib';
 
 	const filters = [
-		{ key: 'all', label: 'Total', color: 'text-accent', value: () => $stats.total },
+		{ key: 'all', label: 'Total', color: 'text-accent', value: () => stats().total },
 		{
 			key: 'completed',
 			label: 'Completed',
 			color: 'text-green-400',
-			value: () => $stats.completed
+			value: () => stats().completed
 		},
-		{ key: 'active', label: 'Pending', color: 'text-orange-400', value: () => $stats.pending }
+		{ key: 'active', label: 'Pending', color: 'text-orange-400', value: () => stats().pending }
 	];
 </script>
 
@@ -22,7 +28,7 @@
 	<AddTodoForm />
 
 	<!-- Todo Statistics -->
-	{#if $stats.total > 0}
+	{#if stats().total > 0}
 		<Box padding="p-2" className="rounded-lg">
 			<Grid cols={3} gap="gap-4" className="text-sm text-center">
 				{#each filters as { key, label, color, value } (key)}
@@ -30,10 +36,10 @@
 						on:click={() => setFilter(key)}
 						className="cursor-pointer rounded-lg transition-colors hover:opacity-80"
 					>
-						<div class={`text-lg font-bold ${$filter === key ? color : 'text-text-secondary'}`}>
+						<div class={`text-lg font-bold ${filter() === key ? color : 'text-text-secondary'}`}>
 							{value()}
 						</div>
-						<div class={`${$filter === key ? `${color} font-semibold` : 'text-text-secondary'}`}>
+						<div class={`${filter() === key ? `${color} font-semibold` : 'text-text-secondary'}`}>
 							{label}
 						</div>
 					</Box>
@@ -43,9 +49,9 @@
 	{/if}
 
 	<!-- Todo List -->
-	{#if $stats.total > 0}
+	{#if stats().total > 0}
 		<Stack spacing="space-y-2">
-			{#each $filteredItems as item (item.id)}
+			{#each filteredItems() as item (item.id)}
 				{#if item && item.id}
 					<ListItem {item} />
 				{/if}
@@ -58,6 +64,6 @@
 		>
 			<p>No todos yet. Add one above to get started!</p>
 		</Box>
-		<p class="text-xs text-gray-400">Current filter: {$filter}</p>
+		<p class="text-xs text-gray-400">Current filter: {filter()}</p>
 	{/if}
 </Stack>

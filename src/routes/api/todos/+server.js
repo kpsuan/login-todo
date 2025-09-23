@@ -9,7 +9,6 @@
 import { json } from '@sveltejs/kit';
 import { todos } from '$lib/todos.js';
 
-
 export async function GET({ locals, url }) {
 	// Check authentication - user must be logged in
 	if (!locals.user) {

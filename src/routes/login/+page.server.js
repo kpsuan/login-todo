@@ -19,7 +19,6 @@ export const actions = {
 			if (!res.ok) {
 				return fail(res.status, { error: data.error || 'Login failed' });
 			}
-
 		} catch (err) {
 			if (err?.status >= 300 && err?.status < 400) {
 				throw err;
