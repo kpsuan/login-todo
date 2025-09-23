@@ -1,4 +1,4 @@
-// User authentication store 
+// User authentication store
 export const userState = $state({
 	isLoggedIn: false,
 	token: null,
