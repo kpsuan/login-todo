@@ -13,7 +13,17 @@ export { default as Stack } from './components/ui/Stack.svelte';
 export { default as Grid } from './components/ui/Grid.svelte';
 
 // Store exports
-export { app, stats, sortedItems, filteredItems, filter, addTodo, updateTodo, deleteTodo, toggleComplete } from './store/todoStore.svelte.js';
+export {
+	app,
+	stats,
+	sortedItems,
+	filteredItems,
+	filter,
+	addTodo,
+	updateTodo,
+	deleteTodo,
+	toggleComplete
+} from './store/todoStore.svelte.js';
 
 // Utility functions
 export { getPriorityColor, formatDate, isOverdue, priorityOptions } from './utils.js';

@@ -1,22 +1,24 @@
-import { writable, derived } from "svelte/store";
+import { writable, derived } from 'svelte/store';
 
-const app_name = "todo_app_2025";
+const app_name = 'todo_app_2025';
 const hasLocalStorage = typeof localStorage !== 'undefined';
 
 const _default = {
 	date_created: Date.now(),
 	date_updated: Date.now(),
-	items: [{
-		id: "demo-1",
-		title: "Welcome to your todo app",
-		description: "This is a sample todo description",
-		dueDate: new Date().toISOString().split('T')[0],
-		priority: "medium",
-		completed: false,
-		date_added: Date.now(),
-		date_updated: Date.now(),
-		date_deleted: null,
-	}],
+	items: [
+		{
+			id: 'demo-1',
+			title: 'Welcome to your todo app',
+			description: 'This is a sample todo description',
+			dueDate: new Date().toISOString().split('T')[0],
+			priority: 'medium',
+			completed: false,
+			date_added: Date.now(),
+			date_updated: Date.now(),
+			date_deleted: null
+		}
+	],
 	trash: []
 };
 
@@ -33,7 +35,9 @@ function save(state) {
 	if (!hasLocalStorage) return;
 	try {
 		localStorage.setItem(app_name, JSON.stringify(state));
-	} catch {}
+	} catch (err) {
+		console.warn('Failed to save to localStorage', err);
+	}
 }
 
 const store = writable(load());
@@ -79,25 +83,24 @@ export const stats = derived(app, ($app) => {
 	return { total, pending, completed };
 });
 
-
 // crud actionss
 export function addTodo(todoData) {
 	app.update((state) => {
 		const newTodo = {
 			id: `todo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-			title: todoData.title || "Untitled",
-			description: todoData.description || "",
-			dueDate: todoData.dueDate || "",
-			priority: todoData.priority || "medium",
+			title: todoData.title || 'Untitled',
+			description: todoData.description || '',
+			dueDate: todoData.dueDate || '',
+			priority: todoData.priority || 'medium',
 			completed: false,
 			date_added: Date.now(),
 			date_updated: Date.now(),
-			date_deleted: null,
+			date_deleted: null
 		};
 		return {
 			...state,
 			date_updated: Date.now(),
-			items: [...state.items, newTodo],
+			items: [...state.items, newTodo]
 		};
 	});
 }
@@ -105,9 +108,7 @@ export function addTodo(todoData) {
 export function updateTodo(id, updates) {
 	app.update((state) => {
 		const items = state.items.map((item) =>
-			item.id === id
-				? { ...item, ...updates, date_updated: Date.now() }
-				: item
+			item.id === id ? { ...item, ...updates, date_updated: Date.now() } : item
 		);
 		return { ...state, date_updated: Date.now(), items };
 	});
@@ -121,7 +122,7 @@ export function deleteTodo(id) {
 			...state,
 			date_updated: Date.now(),
 			items: state.items.filter((i) => i.id !== id),
-			trash: [...state.trash, { ...item, date_deleted: Date.now() }],
+			trash: [...state.trash, { ...item, date_deleted: Date.now() }]
 		};
 	});
 }
@@ -133,8 +134,8 @@ export function toggleComplete(id) {
 				? {
 						...item,
 						completed: !item.completed,
-						date_updated: Date.now(),
-				  }
+						date_updated: Date.now()
+					}
 				: item
 		);
 		return { ...state, date_updated: Date.now(), items };
@@ -143,16 +144,13 @@ export function toggleComplete(id) {
 
 export const filter = writable('all');
 
-export const filteredItems = derived(
-  [sortedItems, filter],
-  ([$sortedItems, $filter]) => {
-    switch ($filter) {
-      case 'active':
-        return $sortedItems.filter(todo => !todo.completed);
-      case 'completed':
-        return $sortedItems.filter(todo => todo.completed);
-      default:
-        return $sortedItems;
-    }
-  }
-);
+export const filteredItems = derived([sortedItems, filter], ([$sortedItems, $filter]) => {
+	switch ($filter) {
+		case 'active':
+			return $sortedItems.filter((todo) => !todo.completed);
+		case 'completed':
+			return $sortedItems.filter((todo) => todo.completed);
+		default:
+			return $sortedItems;
+	}
+});

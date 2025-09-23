@@ -1,23 +1,23 @@
 <script>
-    import '../app.css';
-    import { Container, Box, Flex } from '$lib';
-    import { user, setUser } from '$lib/store/userStore.js';
-    import { onMount } from 'svelte';
+	import '../app.css';
+	import { Container, Box } from '$lib';
+	import { setUser } from '$lib/store/userStore.js';
+	import { onMount } from 'svelte';
 
-    export let data;
+	export let data;
 
-    onMount(() => {
-        if (data.isLoggedIn && data.userData) {
-            setUser({
-                accessToken: 'logged-in', 
-                ...data.userData
-            });
-        }
-    });
+	onMount(() => {
+		if (data.isLoggedIn && data.userData) {
+			setUser({
+				accessToken: 'logged-in',
+				...data.userData
+			});
+		}
+	});
 </script>
 
 <Box variant="primary" className="min-h-screen h-full w-full fixed inset-0 overflow-auto">
-    <Container>
-        <slot />
-    </Container>
+	<Container>
+		<slot />
+	</Container>
 </Box>

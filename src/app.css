@@ -2,32 +2,33 @@
 @plugin '@tailwindcss/forms';
 
 @theme {
-  --color-primary: #0D0714;
-  --color-secondary: #1D1825;
-  --color-tertiary: #3E1671;
-  --color-accent: #9E78CF;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a78bfa;
-  
-  --color-bg-card: #1A1625;
-  --color-border: #2D2A3A;
-  --color-input-bg: #252134;
-  --color-input-border: #3E3554;
-  --color-hover: #453B5E;
-  --color-todo-item: #15101C;
+	--color-primary: #0d0714;
+	--color-secondary: #1d1825;
+	--color-tertiary: #3e1671;
+	--color-accent: #9e78cf;
+	--color-text-primary: #ffffff;
+	--color-text-secondary: #a78bfa;
+
+	--color-bg-card: #1a1625;
+	--color-border: #2d2a3a;
+	--color-input-bg: #252134;
+	--color-input-border: #3e3554;
+	--color-hover: #453b5e;
+	--color-todo-item: #15101c;
 }
 
 @layer base {
-  html, body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--color-primary);
-    min-height: 100vh;
-    width: 100%;
-  }
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		background-color: var(--color-primary);
+		min-height: 100vh;
+		width: 100%;
+	}
 
-  #app {
-    min-height: 100vh;
-    background-color: var(--color-primary);
-  }
+	#app {
+		min-height: 100vh;
+		background-color: var(--color-primary);
+	}
 }
