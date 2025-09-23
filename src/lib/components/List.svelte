@@ -33,7 +33,7 @@
 			<Grid cols={3} gap="gap-2 sm:gap-4" className="text-xs sm:text-sm text-center">
 				{#each filters as { key, label, color, value } (key)}
 					<Box
-						on:click={() => setFilter(key)}
+						onclick={() => setFilter(key)}
 						className="cursor-pointer rounded-lg transition-colors active:opacity-80 sm:hover:opacity-80 p-2 sm:p-3"
 					>
 						<div

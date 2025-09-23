@@ -1,6 +1,4 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-
 	/**
 	 * @typedef {Object} Props
 	 * @property {string} [variant]
@@ -11,6 +9,7 @@
 	 * @property {string} [border]
 	 * @property {string} [className]
 	 * @property {import('svelte').Snippet} [children]
+	 * @property {function} [onclick]
 	 */
 
 	/** @type {Props & { [key: string]: any }} */
@@ -23,10 +22,9 @@
 		border = '',
 		className = '',
 		children,
+		onclick,
 		...rest
 	} = $props();
-
-	const dispatch = createEventDispatcher();
 
 	// background variants
 	let background = $derived({
@@ -42,6 +40,6 @@
 		.join(' '));
 </script>
 
-<div {...rest} class={classes} onclick={(e) => dispatch('click', e)}>
+<div {...rest} class={classes} {onclick}>
 	{@render children?.()}
 </div>
