@@ -2,7 +2,7 @@
 	import { preventDefault } from 'svelte/legacy';
 	import { Save, Plus, X } from 'lucide-svelte';
 
-	import { Stack, Flex, Grid, Box, priorityOptions } from '$lib';
+	import { Stack, Flex, Grid, Box, priorityOptions, PRIORITY_LEVELS } from '$lib';
 
 	/**
 	 * @typedef {Object} Props
@@ -15,7 +15,7 @@
 
 	/** @type {Props} */
 	let {
-		todo = $bindable({ title: '', description: '', dueDate: '', priority: 'medium' }),
+		todo = $bindable({ title: '', description: '', dueDate: '', priority: PRIORITY_LEVELS.MEDIUM }),
 		onSubmit = () => {},
 		onCancel = () => {},
 		variant = 'primary',
@@ -69,7 +69,7 @@
 		>
 			{#if todo.id}
 				<Save class="h-4 w-4" />
-				<span>Save Changes</span>
+				<span>Save</span>
 			{:else}
 				<Plus class="h-4 w-4" />
 				<span>Add Todo</span>

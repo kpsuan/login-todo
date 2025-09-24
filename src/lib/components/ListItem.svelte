@@ -44,7 +44,6 @@
 		if (confirm('Delete this todo?')) deleteTodo(item.id);
 	};
 
-	// Common classes (removed unused variable)
 </script>
 
 {#snippet invalidTodo()}
@@ -132,6 +131,7 @@
 							onclick={startEdit}
 							class="rounded bg-tertiary px-2 py-1 text-xs text-accent transition-colors active:bg-accent active:text-primary sm:hover:bg-accent sm:hover:text-primary flex items-center gap-1"
 							title="Edit todo"
+							aria-label={`Edit todo: ${item.title}`}
 						>
 							<Edit3 class="h-3 w-3" />
 							<span class="hidden sm:inline">Edit</span>
@@ -140,6 +140,7 @@
 							onclick={handleDelete}
 							class="rounded bg-red-900 px-2 py-1 text-xs text-red-400 transition-colors active:bg-red-800 sm:hover:bg-red-800 flex items-center gap-1"
 							title="Delete todo"
+							aria-label={`Delete todo: ${item.title}`}
 						>
 							<Trash2 class="h-3 w-3" />
 							<span class="hidden sm:inline">Delete</span>

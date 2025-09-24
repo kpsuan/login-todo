@@ -1,10 +1,10 @@
 <script>
-	import { addTodo } from '$lib';
+	import { addTodo, PRIORITY_LEVELS } from '$lib';
 	import { Plus } from 'lucide-svelte';
 	import TodoForm from './TodoForm.svelte';
 
 	let showForm = $state(false);
-	let newTodo = $state({ title: '', description: '', dueDate: '', priority: 'medium' });
+	let newTodo = $state({ title: '', description: '', dueDate: '', priority: PRIORITY_LEVELS.MEDIUM });
 
 	function handleAdd(todo) {
 		addTodo(todo);
@@ -12,7 +12,7 @@
 	}
 
 	function resetForm() {
-		newTodo = { title: '', description: '', dueDate: '', priority: 'medium' };
+		newTodo = { title: '', description: '', dueDate: '', priority: PRIORITY_LEVELS.MEDIUM };
 		showForm = false;
 	}
 </script>

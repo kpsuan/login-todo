@@ -1,10 +1,11 @@
 // Todo utility functions
+import { PRIORITY_LEVELS } from './store/todoStore.svelte.js';
 
 export function getPriorityColor(priority) {
 	const colors = {
-		high: 'text-red-600',
-		medium: 'text-yellow-600',
-		low: 'text-green-600'
+		[PRIORITY_LEVELS.HIGH]: 'text-red-600',
+		[PRIORITY_LEVELS.MEDIUM]: 'text-yellow-600',
+		[PRIORITY_LEVELS.LOW]: 'text-green-600'
 	};
 	return colors[priority] || 'text-gray-600';
 }
@@ -29,7 +30,7 @@ export function isOverdue(dueDate, isCompleted = false) {
 }
 
 export const priorityOptions = [
-	{ value: 'low', label: 'Low' },
-	{ value: 'medium', label: 'Medium' },
-	{ value: 'high', label: 'High' }
+	{ value: PRIORITY_LEVELS.LOW, label: 'Low' },
+	{ value: PRIORITY_LEVELS.MEDIUM, label: 'Medium' },
+	{ value: PRIORITY_LEVELS.HIGH, label: 'High' }
 ];

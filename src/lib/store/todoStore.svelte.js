@@ -1,6 +1,25 @@
 const APP_NAME = 'todo_app_2025';
 const IS_BROWSER = typeof window !== 'undefined';
 
+// Constants
+const PRIORITY_LEVELS = {
+	HIGH: 'high',
+	MEDIUM: 'medium',
+	LOW: 'low'
+};
+
+const FILTER_TYPES = {
+	ALL: 'all',
+	ACTIVE: 'active',
+	COMPLETED: 'completed'
+};
+
+const PRIORITY_ORDER = { 
+	[PRIORITY_LEVELS.HIGH]: 0, 
+	[PRIORITY_LEVELS.MEDIUM]: 1, 
+	[PRIORITY_LEVELS.LOW]: 2 
+};
+
 const _default = {
 	date_created: Date.now(),
 	date_updated: Date.now(),
@@ -10,7 +29,7 @@ const _default = {
 			title: 'Welcome to your todo app',
 			description: 'This is a sample todo description',
 			dueDate: new Date().toISOString().split('T')[0],
-			priority: 'medium',
+			priority: PRIORITY_LEVELS.MEDIUM,
 			completed: false,
 			date_added: Date.now(),
 			date_updated: Date.now(),
@@ -43,48 +62,41 @@ function save(state) {
 
 export const todoState = $state({
 	app: load(),
-	filter: 'all'
+	filter: FILTER_TYPES.ALL
 });
 
-const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
+// Helper functions for sorting
+const sortByCompletionStatus = (a, b) => a.completed !== b.completed ? (a.completed ? 1 : -1) : 0;
+const sortByPriority = (a, b) => {
+	const aPriority = PRIORITY_ORDER[a.priority] ?? 1;
+	const bPriority = PRIORITY_ORDER[b.priority] ?? 1;
+	return aPriority - bPriority;
+};
+const sortByDate = (a, b) => a.completed ? a.date_added - b.date_added : b.date_added - a.date_added;
 
-const _stats = $derived({
-	total: todoState.app.items.length,
-	completed: todoState.app.items.filter((item) => item.completed).length,
-	pending: todoState.app.items.length - todoState.app.items.filter((item) => item.completed).length
+const _stats = $derived.by(() => {
+	const total = todoState.app.items.length;
+	const completed = todoState.app.items.filter(item => item.completed).length;
+	return {
+		total,
+		completed,
+		pending: total - completed
+	};
 });
 
 const _sortedItems = $derived(
 	[...todoState.app.items].sort((a, b) => {
-		// completion status (incomplete first, completed last)
-		if (a.completed !== b.completed) {
-			return a.completed ? 1 : -1;
-		}
-
-		// priority order (high = 0, medium = 1, low = 2)
-		const aPriority = PRIORITY_ORDER[a.priority] ?? 1;
-		const bPriority = PRIORITY_ORDER[b.priority] ?? 1;
-
-		if (aPriority !== bPriority) {
-			return aPriority - bPriority;
-		}
-
-		// order by date (completed = old first, pending = new first)
-		if (a.completed) {
-			return a.date_added - b.date_added;
-		} else {
-			return b.date_added - a.date_added;
-		}
+		return sortByCompletionStatus(a, b) || sortByPriority(a, b) || sortByDate(a, b);
 	})
 );
 
 const _filteredItems = $derived.by(() => {
 	const sorted = _sortedItems;
 	switch (todoState.filter) {
-		case 'active':
-			return sorted.filter((todo) => !todo.completed);
-		case 'completed':
-			return sorted.filter((todo) => todo.completed);
+		case FILTER_TYPES.ACTIVE:
+			return sorted.filter(todo => !todo.completed);
+		case FILTER_TYPES.COMPLETED:
+			return sorted.filter(todo => todo.completed);
 		default:
 			return sorted;
 	}
@@ -104,7 +116,7 @@ export function addTodo(todoData) {
 		title: todoData.title || 'Untitled',
 		description: todoData.description || '',
 		dueDate: todoData.dueDate || '',
-		priority: todoData.priority || 'medium',
+		priority: todoData.priority || PRIORITY_LEVELS.MEDIUM,
 		completed: false,
 		date_added: Date.now(),
 		date_updated: Date.now(),
@@ -149,3 +161,6 @@ export function toggleComplete(id) {
 export function setFilter(value) {
 	todoState.filter = value;
 }
+
+// Export constants for use in other components
+export { PRIORITY_LEVELS, FILTER_TYPES };

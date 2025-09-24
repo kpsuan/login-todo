@@ -4,24 +4,25 @@
 		stats,
 		filter,
 		setFilter,
+		FILTER_TYPES,
 		ListItem,
 		AddTodoForm,
 		Stack,
 		Box,
 		Grid
 	} from '$lib';
-	import { CheckCircle, Circle, Target } from 'lucide-svelte';
+	import { CheckCircle, AlarmClock, Target } from 'lucide-svelte';
 
 	const filters = [
-		{ key: 'all', label: 'Total', color: 'text-accent', value: () => stats().total, icon: Target },
+		{ key: FILTER_TYPES.ALL, label: 'Total', color: 'text-accent', value: () => stats().total, icon: Target },
 		{
-			key: 'completed',
+			key: FILTER_TYPES.COMPLETED,
 			label: 'Completed',
 			color: 'text-green-400',
 			value: () => stats().completed,
 			icon: CheckCircle
 		},
-		{ key: 'active', label: 'Pending', color: 'text-orange-400', value: () => stats().pending, icon: Circle }
+		{ key: FILTER_TYPES.ACTIVE, label: 'Pending', color: 'text-orange-400', value: () => stats().pending, icon: AlarmClock }
 	];
 </script>
 

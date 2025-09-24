@@ -23,7 +23,9 @@ export {
 	updateTodo,
 	deleteTodo,
 	toggleComplete,
-	setFilter
+	setFilter,
+	PRIORITY_LEVELS,
+	FILTER_TYPES
 } from './store/todoStore.svelte.js';
 
 // Utility functions
