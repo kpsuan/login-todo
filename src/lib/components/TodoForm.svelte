@@ -23,43 +23,7 @@
 	} = $props();
 </script>
 
-{#snippet titleInput()}
-	<input
-		type="text"
-		bind:value={todo.title}
-		placeholder="Todo title (required)"
-		class="w-full rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary placeholder-text-secondary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
-		required
-	/>
-{/snippet}
-
-{#snippet descriptionInput()}
-	<textarea
-		bind:value={todo.description}
-		placeholder="Description (optional)"
-		rows="2"
-		class="w-full resize-none rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary placeholder-text-secondary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
-	></textarea>
-{/snippet}
-
-{#snippet dateAndPriorityInputs()}
-	<Grid cols={1} gap="gap-2 sm:gap-3" className="sm:grid-cols-2">
-		<input
-			type="date"
-			bind:value={todo.dueDate}
-			class="w-full rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
-		/>
-
-		<select
-			bind:value={todo.priority}
-			class="w-full rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
-		>
-			{#each priorityOptions as option (option.value)}
-				<option value={option.value}>{option.label}</option>
-			{/each}
-		</select>
-	</Grid>
-{/snippet}
+<!-- Simple form inputs don't need snippets -->
 
 {#snippet actionButtons()}
 	<Flex gap="gap-2" className="flex-col sm:flex-row">
@@ -92,9 +56,41 @@
 <Box {variant} border="border border-tertiary">
 	<form onsubmit={preventDefault(() => onSubmit({ ...todo }))}>
 		<Stack spacing="space-y-3">
-			{@render titleInput()}
-			{@render descriptionInput()}
-			{@render dateAndPriorityInputs()}
+			<!-- Title Input -->
+			<input
+				type="text"
+				bind:value={todo.title}
+				placeholder="Todo title (required)"
+				class="w-full rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary placeholder-text-secondary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
+				required
+			/>
+
+			<!-- Description Input -->
+			<textarea
+				bind:value={todo.description}
+				placeholder="Description (optional)"
+				rows="2"
+				class="w-full resize-none rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary placeholder-text-secondary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
+			></textarea>
+
+			<!-- Date and Priority Inputs -->
+			<Grid cols={1} gap="gap-2 sm:gap-3" className="sm:grid-cols-2">
+				<input
+					type="date"
+					bind:value={todo.dueDate}
+					class="w-full rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
+				/>
+
+				<select
+					bind:value={todo.priority}
+					class="w-full rounded border border-tertiary bg-secondary p-2 text-sm text-text-primary focus:ring-1 focus:ring-accent focus:outline-none sm:text-base"
+				>
+					{#each priorityOptions as option (option.value)}
+						<option value={option.value}>{option.label}</option>
+					{/each}
+				</select>
+			</Grid>
+
 			{@render actionButtons()}
 		</Stack>
 	</form>

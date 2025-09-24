@@ -2,7 +2,6 @@
 	import { Section, Box, Stack } from '$lib';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { LogIn } from 'lucide-svelte';
 
 	let loading = $state(false);
 	let username = $state('');
@@ -126,7 +125,6 @@
 			<div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
 			<span>Logging in...</span>
 		{:else}
-			<LogIn class="h-4 w-4" />
 			<span>Log In</span>
 		{/if}
 	</button>
